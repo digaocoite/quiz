@@ -13,43 +13,112 @@
         }
         .question {
             margin-bottom: 15px;
+            text-align: left;
         }
         button {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
+            margin-top: 20px;
         }
         .result {
             margin-top: 20px;
             font-weight: bold;
+        }
+        .explanation {
+            display: none;
+            font-size: 14px;
+            color: red;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <h2>Virtual Reality Quiz</h2>
 
-    <div class="question">
-        <p>1. What are the four key elements of Virtual Reality?</p>
-        <input type="radio" name="q1" value="wrong"> Graphics, Interaction, Feedback, Sound<br>
-        <input type="radio" name="q1" value="correct"> Virtual World, Immersion, Sensory Feedback, Interactivity<br>
-        <input type="radio" name="q1" value="wrong"> AI, 3D Modeling, Textures, Physics<br>
-    </div>
+    <form id="quizForm">
+        <div class="question">
+            <p>1. What are the four key elements of Virtual Reality?</p>
+            <input type="radio" name="q1" value="wrong1"> Graphics, Interaction, Feedback, Sound<br>
+            <input type="radio" name="q1" value="correct"> Virtual World, Immersion, Sensory Feedback, Interactivity<br>
+            <input type="radio" name="q1" value="wrong2"> AI, 3D Modeling, Textures, Physics<br>
+            <p class="explanation" id="ex-q1">Explanation: VR consists of Virtual World, Immersion, Sensory Feedback, and Interactivity.</p>
+        </div>
 
-    <div class="question">
-        <p>2. What does 'immersion' in VR refer to?</p>
-        <input type="radio" name="q2" value="wrong"> A video game with 3D graphics<br>
-        <input type="radio" name="q2" value="correct"> A sense of presence in an alternate reality<br>
-        <input type="radio" name="q2" value="wrong"> The ability to move an avatar in a 2D game<br>
-    </div>
+        <div class="question">
+            <p>2. What does 'immersion' in VR refer to?</p>
+            <input type="radio" name="q2" value="wrong1"> A video game with 3D graphics<br>
+            <input type="radio" name="q2" value="correct"> A sense of presence in an alternate reality<br>
+            <input type="radio" name="q2" value="wrong2"> The ability to move an avatar in a 2D game<br>
+            <p class="explanation" id="ex-q2">Explanation: Immersion is about feeling present in a virtual space.</p>
+        </div>
 
-    <div class="question">
-        <p>3. What is an example of Augmented Reality?</p>
-        <input type="radio" name="q3" value="wrong"> Playing a VR horror game<br>
-        <input type="radio" name="q3" value="wrong"> Watching a 3D movie<br>
-        <input type="radio" name="q3" value="correct"> Using AR glasses to overlay information on the real world<br>
-    </div>
+        <div class="question">
+            <p>3. What is an example of Augmented Reality?</p>
+            <input type="radio" name="q3" value="wrong1"> Playing a VR horror game<br>
+            <input type="radio" name="q3" value="wrong2"> Watching a 3D movie<br>
+            <input type="radio" name="q3" value="correct"> Using AR glasses to overlay information on the real world<br>
+            <p class="explanation" id="ex-q3">Explanation: AR overlays digital content onto the real world, unlike VR which creates a fully virtual environment.</p>
+        </div>
 
-    <button onclick="checkAnswers()">Submit</button>
+        <div class="question">
+            <p>4. What device is commonly used for VR immersion?</p>
+            <input type="radio" name="q4" value="wrong1"> Smartphone<br>
+            <input type="radio" name="q4" value="wrong2"> Television<br>
+            <input type="radio" name="q4" value="correct"> Head-Mounted Display (HMD)<br>
+            <p class="explanation" id="ex-q4">Explanation: HMDs like Oculus or Vive allow users to experience VR.</p>
+        </div>
+
+        <div class="question">
+            <p>5. What is haptic feedback in VR?</p>
+            <input type="radio" name="q5" value="wrong1"> A type of visual enhancement<br>
+            <input type="radio" name="q5" value="wrong2"> A network protocol for VR connections<br>
+            <input type="radio" name="q5" value="correct"> A technology that provides touch sensations<br>
+            <p class="explanation" id="ex-q5">Explanation: Haptic feedback lets users "feel" virtual objects through vibrations or force.</p>
+        </div>
+
+        <div class="question">
+            <p>6. Which industry is NOT a major adopter of VR?</p>
+            <input type="radio" name="q6" value="wrong1"> Healthcare<br>
+            <input type="radio" name="q6" value="wrong2"> Gaming<br>
+            <input type="radio" name="q6" value="correct"> Agriculture<br>
+            <p class="explanation" id="ex-q6">Explanation: While agriculture uses technology, VR is more prominent in healthcare and gaming.</p>
+        </div>
+
+        <div class="question">
+            <p>7. What does "field of view" mean in VR?</p>
+            <input type="radio" name="q7" value="wrong1"> The number of objects in a VR scene<br>
+            <input type="radio" name="q7" value="correct"> The extent of the observable virtual environment<br>
+            <input type="radio" name="q7" value="wrong2"> The range of a VR device's sensors<br>
+            <p class="explanation" id="ex-q7">Explanation: Field of View (FOV) determines how much of the VR world you can see at once.</p>
+        </div>
+
+        <div class="question">
+            <p>8. What is motion sickness in VR caused by?</p>
+            <input type="radio" name="q8" value="wrong1"> High-resolution graphics<br>
+            <input type="radio" name="q8" value="correct"> A mismatch between visual input and inner ear balance<br>
+            <input type="radio" name="q8" value="wrong2"> Slow internet connection<br>
+            <p class="explanation" id="ex-q8">Explanation: Motion sickness happens when the brain receives conflicting signals from the eyes and inner ear.</p>
+        </div>
+
+        <div class="question">
+            <p>9. What is a VR avatar?</p>
+            <input type="radio" name="q9" value="wrong1"> A robot inside a VR world<br>
+            <input type="radio" name="q9" value="wrong2"> A game developer's tool<br>
+            <input type="radio" name="q9" value="correct"> A virtual representation of a user in VR<br>
+            <p class="explanation" id="ex-q9">Explanation: Avatars represent users in a VR environment.</p>
+        </div>
+
+        <div class="question">
+            <p>10. What is a "CAVE" system in VR?</p>
+            <input type="radio" name="q10" value="wrong1"> A VR game level<br>
+            <input type="radio" name="q10" value="wrong2"> A VR storage device<br>
+            <input type="radio" name="q10" value="correct"> A room-sized immersive VR system<br>
+            <p class="explanation" id="ex-q10">Explanation: A CAVE (Cave Automatic Virtual Environment) uses projections to create an immersive VR experience.</p>
+        </div>
+
+        <button type="button" onclick="checkAnswers()">Submit</button>
+    </form>
 
     <p class="result" id="result"></p>
 
@@ -57,11 +126,22 @@
         function checkAnswers() {
             let correct = 0;
             const answers = document.querySelectorAll('input[type="radio"]:checked');
+            const explanations = document.querySelectorAll('.explanation');
+            
+            explanations.forEach(exp => exp.style.display = "none"); // Hide all explanations first
+
             answers.forEach(answer => {
-                if (answer.value === "correct") correct++;
+                if (answer.value === "correct") {
+                    correct++;
+                } else {
+                    const explanationId = "ex-" + answer.name;
+                    document.getElementById(explanationId).style.display = "block"; // Show explanation for wrong answer
+                }
             });
-            document.getElementById("result").innerText = `You got ${correct} out of 3 correct!`;
+
+            document.getElementById("result").innerText = `You got ${correct} out of 10 correct!`;
         }
     </script>
 </body>
 </html>
+
