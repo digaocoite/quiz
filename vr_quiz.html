@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Virtual Reality Quiz</h2>
+
+    <div class="question">
+        <p>1. What are the four key elements of Virtual Reality?</p>
+        <input type="radio" name="q1" value="wrong"> Graphics, Interaction, Feedback, Sound<br>
+        <input type="radio" name="q1" value="correct"> Virtual World, Immersion, Sensory Feedback, Interactivity<br>
+        <input type="radio" name="q1" value="wrong"> AI, 3D Modeling, Textures, Physics<br>
+    </div>
+
+    <div class="question">
+        <p>2. What does 'immersion' in VR refer to?</p>
+        <input type="radio" name="q2" value="wrong"> A video game with 3D graphics<br>
+        <input type="radio" name="q2" value="correct"> A sense of presence in an alternate reality<br>
+        <input type="radio" name="q2" value="wrong"> The ability to move an avatar in a 2D game<br>
+    </div>
+
+    <div class="question">
+        <p>3. What is an example of Augmented Reality?</p>
+        <input type="radio" name="q3" value="wrong"> Playing a VR horror game<br>
+        <input type="radio" name="q3" value="wrong"> Watching a 3D movie<br>
+        <input type="radio" name="q3" value="correct"> Using AR glasses to overlay information on the real world<br>
+    </div>
+
+    <button onclick="checkAnswers()">Submit</button>
+
+    <p class="result" id="result"></p>
+
+    <script>
+        function checkAnswers() {
+            let correct = 0;
+            const answers = document.querySelectorAll('input[type="radio"]:checked');
+            answers.forEach(answer => {
+                if (answer.value === "correct") correct++;
+            });
+            document.getElementById("result").innerText = `You got ${correct} out of 3 correct!`;
+        }
+    </script>
+</body>
+</html>
