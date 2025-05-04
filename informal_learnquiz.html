@@ -127,8 +127,6 @@
                 `;
                 quizContainer.innerHTML += questionHTML;
             });
-
-            restoreProgress();
         }
 
         function checkAnswers() {
@@ -139,7 +137,6 @@
             questions.forEach((q, index) => {
                 const selectedAnswer = document.querySelector(`input[name="q${index}"]:checked`);
                 if (selectedAnswer) {
-                    localStorage.setItem(`q${index}`, selectedAnswer.value);
                     if (parseInt(selectedAnswer.value) === q.correct) {
                         correct++;
                     } else {
@@ -148,22 +145,12 @@
                 }
             });
 
-            document.getElementById("result").innerText = `You got ${correct} out of 10 correct!`;
+            document.getElementById("result").innerText = `You got ${correct} out of ${questions.length} correct!`;
         }
 
         function resetQuiz() {
-            localStorage.clear();
             loadQuiz();
             document.getElementById("result").innerText = "";
-        }
-
-        function restoreProgress() {
-            questions.forEach((q, index) => {
-                let savedAnswer = localStorage.getItem(`q${index}`);
-                if (savedAnswer !== null) {
-                    document.querySelector(`input[name="q${index}"][value="${savedAnswer}"]`).checked = true;
-                }
-            });
         }
 
         loadQuiz();
