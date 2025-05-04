@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informal Learning Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 15px;
+            text-align: left;
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .explanation {
+            display: none;
+            font-size: 14px;
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Informal Learning Quiz</h2>
+
+    <form id="quizForm">
+        <div id="quiz-container"></div>
+        <button type="button" onclick="checkAnswers()">Submit</button>
+        <button type="button" onclick="resetQuiz()">Reset</button>
+    </form>
+
+    <p class="result" id="result"></p>
+
+    <script>
+        const questions = [
+            {
+                question: "What is informal learning?",
+                options: ["Learning that happens in a classroom setting", "Learning that occurs outside of formal educational institutions", "Only learning through online courses"],
+                correct: 1,
+                explanation: "Informal learning is unstructured and occurs outside of formal settings like schools."
+            },
+            {
+                question: "Which of the following is an example of informal learning?",
+                options: ["Attending a university lecture", "Watching a documentary at home", "Taking a certified online course"],
+                correct: 1,
+                explanation: "Watching a documentary informally boosts knowledge without formal assessment."
+            },
+            {
+                question: "Which framework helps recognize informal learning for formal credit?",
+                options: ["MOOCs", "Recognition of Prior Learning (RPL)", "Bloom's Taxonomy"],
+                correct: 1,
+                explanation: "RPL assesses and recognizes skills gained outside formal education."
+            },
+            {
+                question: "What is a key benefit of informal learning in the workplace?",
+                options: ["It requires expensive resources", "It fosters continuous skill development on the job", "It replaces all formal training"],
+                correct: 1,
+                explanation: "Informal learning supports continuous, flexible skill building at work."
+            },
+            {
+                question: "How can informal learning be assessed?",
+                options: ["Only through written exams", "Using portfolios, interviews, and practical demonstrations", "It cannot be assessed"],
+                correct: 1,
+                explanation: "Portfolios, interviews, and real-world tasks are valid assessment tools for informal learning."
+            },
+            {
+                question: "Which of the following is NOT typically a source of informal learning?",
+                options: ["Conversations with peers", "Reading a blog post", "Enrolling in a degree program"],
+                correct: 2,
+                explanation: "Degree programs are formal learning, unlike peer conversations or blogs."
+            },
+            {
+                question: "What role does motivation play in informal learning?",
+                options: ["It's not important", "It's crucial because learning is self-directed", "Only teachers need to be motivated"],
+                correct: 1,
+                explanation: "Self-direction and motivation are key in informal learning success."
+            },
+            {
+                question: "Which term best describes learning that is intentional but not formally structured?",
+                options: ["Formal learning", "Informal learning", "Non-formal learning"],
+                correct: 2,
+                explanation: "Non-formal learning is intentional and organized but outside formal education systems."
+            },
+            {
+                question: "Why is recognizing informal learning important for career development?",
+                options: ["It has no real impact", "It validates skills and can lead to new opportunities", "It replaces formal education entirely"],
+                correct: 1,
+                explanation: "Recognizing informal learning helps validate skills, enhancing career prospects."
+            },
+            {
+                question: "Which of the following tools is commonly used to document informal learning?",
+                options: ["Diplomas", "Portfolios", "Report Cards"],
+                correct: 1,
+                explanation: "Portfolios showcase evidence of informal learning achievements."
+            }
+        ];
+
+        function loadQuiz() {
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                let questionHTML = `
+                    <div class="question">
+                        <p>${index + 1}. ${q.question}</p>
+                        ${q.options.map((opt, i) => `
+                            <input type="radio" name="q${index}" value="${i}"> ${opt}<br>
+                        `).join('')}
+                        <p class="explanation" id="ex-q${index}">${q.explanation}</p>
+                    </div>
+                `;
+                quizContainer.innerHTML += questionHTML;
+            });
+
+            restoreProgress();
+        }
+
+        function checkAnswers() {
+            let correct = 0;
+            const explanations = document.querySelectorAll('.explanation');
+            explanations.forEach(exp => exp.style.display = "none");
+
+            questions.forEach((q, index) => {
+                const selectedAnswer = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selectedAnswer) {
+                    localStorage.setItem(`q${index}`, selectedAnswer.value);
+                    if (parseInt(selectedAnswer.value) === q.correct) {
+                        correct++;
+                    } else {
+                        document.getElementById(`ex-q${index}").style.display = "block";
+                    }
+                }
+            });
+
+            document.getElementById("result").innerText = `You got ${correct} out of 10 correct!`;
+        }
+
+        function resetQuiz() {
+            localStorage.clear();
+            loadQuiz();
+            document.getElementById("result").innerText = "";
+        }
+
+        function restoreProgress() {
+            questions.forEach((q, index) => {
+                let savedAnswer = localStorage.getItem(`q${index}`);
+                if (savedAnswer !== null) {
+                    document.querySelector(`input[name="q${index}"][value="${savedAnswer}"]`).checked = true;
+                }
+            });
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
