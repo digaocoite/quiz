@@ -53,61 +53,61 @@
                 question: "What is informal learning?",
                 options: ["Learning that happens in a classroom setting", "Learning that occurs outside of formal educational institutions", "Only learning through online courses"],
                 correct: 1,
-                explanation: "Informal learning is unstructured and occurs outside of formal settings like schools."
+                explanation: "Informal learning happens outside formal institutions and is often unstructured."
             },
             {
                 question: "Which of the following is an example of informal learning?",
-                options: ["Attending a university lecture", "Watching a documentary at home", "Taking a certified online course"],
+                options: ["Taking a university exam", "Reading a blog post on your own", "Completing a certified training course"],
                 correct: 1,
-                explanation: "Watching a documentary informally boosts knowledge without formal assessment."
+                explanation: "Reading a blog post independently is a classic example of informal learning."
             },
             {
-                question: "Which framework helps recognize informal learning for formal credit?",
-                options: ["MOOCs", "Recognition of Prior Learning (RPL)", "Bloom's Taxonomy"],
-                correct: 1,
-                explanation: "RPL assesses and recognizes skills gained outside formal education."
+                question: "Which framework formalizes informal learning recognition?",
+                options: ["Recognition of Prior Learning (RPL)", "Learning Management System (LMS)", "Taxonomy of Learning"],
+                correct: 0,
+                explanation: "RPL helps recognize and credit informal learning experiences."
             },
             {
-                question: "What is a key benefit of informal learning in the workplace?",
-                options: ["It requires expensive resources", "It fosters continuous skill development on the job", "It replaces all formal training"],
-                correct: 1,
-                explanation: "Informal learning supports continuous, flexible skill building at work."
-            },
-            {
-                question: "How can informal learning be assessed?",
-                options: ["Only through written exams", "Using portfolios, interviews, and practical demonstrations", "It cannot be assessed"],
-                correct: 1,
-                explanation: "Portfolios, interviews, and real-world tasks are valid assessment tools for informal learning."
-            },
-            {
-                question: "Which of the following is NOT typically a source of informal learning?",
-                options: ["Conversations with peers", "Reading a blog post", "Enrolling in a degree program"],
+                question: "What is a benefit of informal learning in the workplace?",
+                options: ["Rigid curriculum", "Expensive materials", "On-the-job skill building"],
                 correct: 2,
-                explanation: "Degree programs are formal learning, unlike peer conversations or blogs."
+                explanation: "Workplace informal learning fosters practical, on-the-job skills."
             },
             {
-                question: "What role does motivation play in informal learning?",
-                options: ["It's not important", "It's crucial because learning is self-directed", "Only teachers need to be motivated"],
+                question: "How is informal learning assessed?",
+                options: ["Only via standardized tests", "With portfolios and practical evaluations", "It cannot be assessed"],
                 correct: 1,
-                explanation: "Self-direction and motivation are key in informal learning success."
+                explanation: "Portfolios and practical evaluations are common informal learning assessment tools."
             },
             {
-                question: "Which term best describes learning that is intentional but not formally structured?",
-                options: ["Formal learning", "Informal learning", "Non-formal learning"],
+                question: "Which of the following is NOT informal learning?",
+                options: ["Self-paced online research", "Conversations with colleagues", "Enrolling in a formal degree program"],
                 correct: 2,
-                explanation: "Non-formal learning is intentional and organized but outside formal education systems."
+                explanation: "Formal degree programs are not considered informal learning."
             },
             {
-                question: "Why is recognizing informal learning important for career development?",
-                options: ["It has no real impact", "It validates skills and can lead to new opportunities", "It replaces formal education entirely"],
+                question: "What drives informal learning?",
+                options: ["Mandatory testing", "Learner's personal motivation", "Scheduled classes"],
                 correct: 1,
-                explanation: "Recognizing informal learning helps validate skills, enhancing career prospects."
+                explanation: "Informal learning is self-directed and driven by personal motivation."
             },
             {
-                question: "Which of the following tools is commonly used to document informal learning?",
-                options: ["Diplomas", "Portfolios", "Report Cards"],
+                question: "What type of learning is intentional but occurs outside formal settings?",
+                options: ["Formal learning", "Non-formal learning", "Incidental learning"],
                 correct: 1,
-                explanation: "Portfolios showcase evidence of informal learning achievements."
+                explanation: "Non-formal learning is organized but happens outside formal systems."
+            },
+            {
+                question: "Why is recognizing informal learning valuable?",
+                options: ["It reduces education standards", "It validates real-world skills", "It replaces university degrees"],
+                correct: 1,
+                explanation: "Recognizing informal learning validates practical skills and experience."
+            },
+            {
+                question: "What is a useful tool for showcasing informal learning?",
+                options: ["Transcript", "Portfolio", "Certificate"],
+                correct: 1,
+                explanation: "A portfolio is a widely used tool to document informal learning achievements."
             }
         ];
 
@@ -115,7 +115,8 @@
             const quizContainer = document.getElementById('quiz-container');
             quizContainer.innerHTML = '';
 
-            questions.forEach((q, index) => {
+            let shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+            shuffledQuestions.forEach((q, index) => {
                 let questionHTML = `
                     <div class="question">
                         <p>${index + 1}. ${q.question}</p>
@@ -127,6 +128,8 @@
                 `;
                 quizContainer.innerHTML += questionHTML;
             });
+
+            restoreProgress();
         }
 
         function checkAnswers() {
@@ -137,10 +140,11 @@
             questions.forEach((q, index) => {
                 const selectedAnswer = document.querySelector(`input[name="q${index}"]:checked`);
                 if (selectedAnswer) {
+                    localStorage.setItem(`q${index}`, selectedAnswer.value);
                     if (parseInt(selectedAnswer.value) === q.correct) {
                         correct++;
                     } else {
-                        document.getElementById(`ex-q${index}").style.display = "block";
+                        document.getElementById(`ex-q${index}`).style.display = "block";
                     }
                 }
             });
@@ -149,8 +153,18 @@
         }
 
         function resetQuiz() {
+            localStorage.clear();
             loadQuiz();
             document.getElementById("result").innerText = "";
+        }
+
+        function restoreProgress() {
+            questions.forEach((q, index) => {
+                let savedAnswer = localStorage.getItem(`q${index}`);
+                if (savedAnswer !== null) {
+                    document.querySelector(`input[name="q${index}"][value="${savedAnswer}"]`).checked = true;
+                }
+            });
         }
 
         loadQuiz();
